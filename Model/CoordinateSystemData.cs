@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace LinearTransformation.Model {
@@ -101,10 +103,10 @@ namespace LinearTransformation.Model {
                 throw new Exception("Step can not be smaller than 0");
             }
 
-            this._minX  = minX;
-            this._maxX  = maxX;
-            this._minY  = minY;
-            this._maxY  = maxY;
+            this._minX = minX;
+            this._maxX = maxX;
+            this._minY = minY;
+            this._maxY = maxY;
             this._unitX = unit;
             this._unitY = unit;
             this._stepX = step;
@@ -146,6 +148,9 @@ namespace LinearTransformation.Model {
 
         private static double CalculateCellAmount(double min, double max, double unit) {
             // Calculate the amount of units which fit into the given range
+
+            //TODO: I think this can be turned into a single return
+            // return (Math.Abs(max) - min) * temp;
 
             // Variable used to adjusting the cell amount based on the unit value
             double temp = ((unit < 1) ? (1 / unit * .5) : 1);
@@ -197,6 +202,109 @@ namespace LinearTransformation.Model {
             // Step
             //this.StepX = this.UnitX * .5;
             //this.StepY = this.UnitY * .5;
+        }
+
+        public static CoordinateSystemData CalculateBoundaries(Size canvasSize, CoordinateSystemData boundaryData, Tuple<Vector,Vector> basisVectors) {
+            double minX = boundaryData.MinX, maxX = boundaryData.MaxX, minY = boundaryData.MinY, maxY = boundaryData.MaxY;
+            double w = canvasSize.Width;
+            double h = canvasSize.Height;
+            double step = 100;
+
+            #region Corner Approach
+
+            Vector[] corners = new Vector[4];
+            // top left
+            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(0, 0));
+
+            // top right
+            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(w, 0));
+
+            // bottom left
+            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(0, h));
+
+            // boottom right
+            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(w, h));
+
+            foreach (Vector v in corners) {
+                if (v.X < minX)
+                    minX = v.X;
+                if (v.X > maxX)
+                    maxX = v.X;
+                if (v.Y < minY)
+                    minY = v.Y;
+                if (v.Y > maxY)
+                    maxY = v.Y;
+            }
+
+            #endregion
+
+            #region pixelapproach
+            /*
+            // Upper canvas border
+            for (double x = 0, y = 0; x <= w; x += step) {
+                Vector p = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(x, y));
+                if (p.X < minX)
+                    minX = p.X;
+                else if (p.X > maxX)
+                    maxX = p.X;
+                if (p.Y < minY)
+                    minY = p.Y;
+                else if (p.Y > maxY)
+                    maxY = p.Y;
+            }
+
+            // Lower canvas border
+            for (double x = 0, y = h; x <= w; x += step) {
+                Vector p = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(x, y));
+                if (p.X < minX)
+                    minX = p.X;
+                else if (p.X > maxX)
+                    maxX = p.X;
+                if (p.Y < minY)
+                    minY = p.Y;
+                else if (p.Y > maxY)
+                    maxY = p.Y;
+            }
+
+            // Right canvas border
+            for (double y = 0, x = w; y <= h; y += step) {
+                Vector p = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(x, y));
+                if (p.X < minX)
+                    minX = p.X;
+                else if (p.X > maxX)
+                    maxX = p.X;
+                if (p.Y < minY)
+                    minY = p.Y;
+                else if (p.Y > maxY)
+                    maxY = p.Y;
+            }
+
+            // Left canvas border
+            for (double y = 0, x = 0; y <= h; y += step) {
+                Vector p = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(x, y));
+                if (p.X < minX)
+                    minX = p.X;
+                else if (p.X > maxX)
+                    maxX = p.X;
+                if (p.Y < minY)
+                    minY = p.Y;
+                else if (p.Y > maxY)
+                    maxY = p.Y;
+            }
+            */
+            #endregion
+
+            boundaryData.MinX = minX;
+            boundaryData.MaxX = maxX;
+            boundaryData.MinY = minY;
+            boundaryData.MaxY = maxY;
+
+            boundaryData.IHat.X = basisVectors.Item1.X;
+            boundaryData.IHat.Y = basisVectors.Item1.Y;
+            boundaryData.JHat.X = basisVectors.Item2.X;
+            boundaryData.JHat.Y = basisVectors.Item2.Y;
+
+            return boundaryData;
         }
     }
 }

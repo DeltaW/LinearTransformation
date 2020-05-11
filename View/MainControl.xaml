@@ -272,8 +272,14 @@
                     <GroupBox.Header>
                         <Label FontFamily="Courier New" FontSize="14" Content="Vectorlist"/>
                     </GroupBox.Header>
-                    
-                    <ListView  Background="DarkSlateGray" ItemsSource="{Binding Vectors}"></ListView>
+                    <StackPanel>
+                        <Label FontFamily="Consolas" x:Name="Label_StaticCoordinate"/>
+                        <Label FontFamily="Consolas"  x:Name="Label_DynamicCoordinate"/>
+                        <Label FontFamily="Consolas"  x:Name="Label_test"/>
+                        <Label FontFamily="Consolas"  x:Name="Label_test2"/>
+                        <Label FontFamily="Consolas"  x:Name="Label_test3"/>
+                        <ListView  Background="DarkSlateGray" ItemsSource="{Binding Vectors}"></ListView>
+                    </StackPanel>
                     
                 </GroupBox>
                 

@@ -11,7 +11,7 @@
                 Margin="0"
                 x:Name="CoordinateCanvas"
                 Background="#19374b"
-                ClipToBounds="True"
+                ClipToBounds="False"
                 Focusable="True"
                 />
     </Grid>

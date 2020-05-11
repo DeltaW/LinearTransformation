@@ -40,19 +40,19 @@ namespace LinearTransformation.ViewModel {
             this._canvas.ReleaseMouseCapture();
         }
         private void Control_MouseMove(object sender, MouseEventArgs e) {
-            if (this._isDragging) {
-                Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
-
-                Point p = e.GetPosition(this._canvas);
-                Vector m = new Vector(p.X, p.Y);
-
+            Point p = e.GetPosition(this._canvas);
+            Vector m = new Vector(p.X, p.Y);
+            Size canvasSize = new Size(this._canvas.ActualWidth, this._canvas.ActualHeight);
+            Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
+                                                                                   this._data,
+                                                                                   this._mouseLocationWithinCanvas);
                 Vector toMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
                                                                                    this._data,
                                                                                    m);
+            if (this._isDragging) {
 
-                Vector fromMousePosition = CoordinateConverter.FromPointToCoordinate(canvasSize,
-                                                                                   this._data,
-                                                                                   this._mouseLocationWithinCanvas);
+
+
 
                 double scrollspeed = (this._data.UnitX + this._data.UnitY) / 2;
                 Vector distance = (fromMousePosition - toMousePosition) * scrollspeed;
@@ -72,8 +72,23 @@ namespace LinearTransformation.ViewModel {
 
                 this._mainControlVM.UpdateWindowSettings(this._data);
 
+
                 this.Update();
             }
+            Vector temp = CoordinateConverter.FromPointToCoordinate(canvasSize,
+                                                                        this._dynamicData,
+                                                                        m);
+            Vector temp2 = CoordinateConverter.FromPointToCoordinate(canvasSize,
+                                                                        this._dynamicData,
+                                                                        new Vector(0,0)/*m*/);
+            this._mainControlVM._mainControl.Label_DynamicCoordinate.Content = $"dynamic: ({temp.X} | {temp.Y})";
+            this._mainControlVM._mainControl.Label_StaticCoordinate.Content = $"static:  ({toMousePosition.X} | {toMousePosition.Y})";
+            this._mainControlVM._mainControl.Label_test.Content = $"dynamic (0|0): ({temp2.X} | {temp2.Y})";
+
+            this._mainControlVM._mainControl.Label_test2.Content = $"dynamic (ihat): ({this._dynamicData.IHat.X} | {this._dynamicData.IHat.Y})";
+            this._mainControlVM._mainControl.Label_test3.Content = $"dynamic (jhat): ({this._dynamicData.JHat.X} | {this._dynamicData.JHat.Y})";
+
+
         }
         private void Control_MouseWheel(object sender, MouseWheelEventArgs e) {
             if (e.Delta > 0) {
@@ -197,6 +212,14 @@ namespace LinearTransformation.ViewModel {
             bool showDynamicGrid = (bool) this._mainControlVM._mainControl.ToggleButton_DynamicGrid.IsChecked;
             bool showBasisVectors = (bool) this._mainControlVM._mainControl.ToggleButton_BasisVectors.IsChecked;
 
+            this._dynamicData = CoordinateSystemData.CalculateBoundaries(new Size(this._canvas.ActualWidth,
+                                                                                  this._canvas.ActualHeight),
+                                                                         this._data,
+                                                                         new Tuple<Vector, Vector>(this._dynamicData.IHat,
+                                                                                                   this._dynamicData.JHat));
+            //this._dynamicData = new CoordinateSystemData(-1, 1, -1, 1, 1, .5);
+            //this._dynamicData.IHat = this._data.IHat;
+            //this._dynamicData.JHat = this._data.JHat;
 
             this._canvas.Children.Clear();
 

@@ -24,10 +24,12 @@ namespace LinearTransformation.Model {
             };
 
             // TODO: Make sure that this makes sense
-            return new Vector(CalculateCoordinateX(data.MinX, data.MaxX, (point.X / cellSize.Width)
-                                            * data.IHat.X + (point.Y / cellSize.Height) * data.IHat.Y),
-                              CalculateCoordinateY(data.MinY, data.MaxY, (point.Y / cellSize.Height)
-                                            * data.JHat.Y + (point.X / cellSize.Width) * data.IHat.Y));
+            return new Vector(CalculateCoordinateX(data.MinX, data.MaxX,
+                                            (point.X / cellSize.Width)  * data.IHat.X +
+                                            (point.Y / cellSize.Height) * data.IHat.Y),
+                              CalculateCoordinateY(data.MinY, data.MaxY,
+                                            (point.Y / cellSize.Height) * data.JHat.Y +
+                                            (point.X / cellSize.Width)  * data.IHat.Y));
 
         }
         private static double CalculateCoordinateX(double min, double max, double pointX) {
@@ -271,8 +273,12 @@ namespace LinearTransformation.Model {
                 Height = h / data.GetCellSize().Height,
             };
 
-            return new Vector(CalculatePointX(data.MinX, data.MaxX, coordinate.X * data.IHat.X + coordinate.Y * data.JHat.X) * cellSize.Width,
-                              CalculatePointY(data.MinY, data.MaxY, coordinate.Y * data.JHat.Y + coordinate.X * data.IHat.Y) * cellSize.Height);
+            return new Vector(CalculatePointX(data.MinX, data.MaxX,
+                                            coordinate.X * data.IHat.X +
+                                            coordinate.Y * data.JHat.X) * cellSize.Width,
+                              CalculatePointY(data.MinY, data.MaxY,
+                                            coordinate.Y * data.JHat.Y +
+                                            coordinate.X * data.IHat.Y) * cellSize.Height);
         }
         private static double CalculatePointX(double min, double max, double coordinate) {
             // Calculates the corresponding x (canvas) coordinate through a coordinate within a range
