@@ -204,26 +204,43 @@ namespace LinearTransformation.Model {
             //this.StepY = this.UnitY * .5;
         }
 
-        public static CoordinateSystemData CalculateBoundaries(Size canvasSize, CoordinateSystemData boundaryData, Tuple<Vector,Vector> basisVectors) {
-            double minX = boundaryData.MinX, maxX = boundaryData.MaxX, minY = boundaryData.MinY, maxY = boundaryData.MaxY;
+        public static CoordinateSystemData CalculateBoundaries(Size canvasSize, CoordinateSystemData data, Tuple<Vector, Vector> basisVectors) {
+            double minX = data.MinX, maxX = data.MaxX, minY = data.MinY, maxY = data.MaxY;
             double w = canvasSize.Width;
             double h = canvasSize.Height;
             double step = 100;
 
-            #region Corner Approach
+            #region third attempt
+            // TODO:
 
+            minX = minX * basisVectors.Item1.X +
+                   minY * basisVectors.Item2.X;
+
+            minY = minY * basisVectors.Item2.Y +
+                   minX * basisVectors.Item1.Y;
+
+            maxX = maxX * basisVectors.Item1.X +
+                   maxY * basisVectors.Item2.X;
+
+            maxY = maxY * basisVectors.Item2.Y +
+                   maxX * basisVectors.Item1.Y;
+            #endregion
+
+
+            #region Corner Approach
+            /*
             Vector[] corners = new Vector[4];
             // top left
-            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(0, 0));
+            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(0, 0));
 
             // top right
-            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(w, 0));
+            corners[1] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(w, 0));
 
             // bottom left
-            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(0, h));
+            corners[2] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(0, h));
 
             // boottom right
-            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, boundaryData, new Vector(w, h));
+            corners[3] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(w, h));
 
             foreach (Vector v in corners) {
                 if (v.X < minX)
@@ -235,7 +252,7 @@ namespace LinearTransformation.Model {
                 if (v.Y > maxY)
                     maxY = v.Y;
             }
-
+            */
             #endregion
 
             #region pixelapproach
@@ -294,17 +311,17 @@ namespace LinearTransformation.Model {
             */
             #endregion
 
-            boundaryData.MinX = minX;
-            boundaryData.MaxX = maxX;
-            boundaryData.MinY = minY;
-            boundaryData.MaxY = maxY;
+            data.MinX = minX;
+            data.MaxX = maxX;
+            data.MinY = minY;
+            data.MaxY = maxY;
 
-            boundaryData.IHat.X = basisVectors.Item1.X;
-            boundaryData.IHat.Y = basisVectors.Item1.Y;
-            boundaryData.JHat.X = basisVectors.Item2.X;
-            boundaryData.JHat.Y = basisVectors.Item2.Y;
+            data.IHat.X = basisVectors.Item1.X;
+            data.IHat.Y = basisVectors.Item1.Y;
+            data.JHat.X = basisVectors.Item2.X;
+            data.JHat.Y = basisVectors.Item2.Y;
 
-            return boundaryData;
+            return data;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace LinearTransformation.Model {
             // TODO: Make sure that this makes sense
             return new Vector(CalculateCoordinateX(data.MinX, data.MaxX,
                                             (point.X / cellSize.Width)  * data.IHat.X +
-                                            (point.Y / cellSize.Height) * data.IHat.Y),
+                                            (point.Y / cellSize.Height) * data.JHat.X),
                               CalculateCoordinateY(data.MinY, data.MaxY,
                                             (point.Y / cellSize.Height) * data.JHat.Y +
                                             (point.X / cellSize.Width)  * data.IHat.Y));
