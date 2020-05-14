@@ -56,14 +56,12 @@ namespace LinearTransformation.Components {
             //double g = drawingSolidBrush.Color.G;
             //double b = drawingSolidBrush.Color.B;
 
-            System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog {
-                Color = drawingSolidBrush.Color,
-            };
-            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
-                SolidColorBrush b = new SolidColorBrush(Color.FromArgb(colorDialog.Color.A,
-                                                                                  colorDialog.Color.R,
-                                                                                  colorDialog.Color.G,
-                                                                                  colorDialog.Color.B));
+            this._mainControlVM.ColourDialog.Color = drawingSolidBrush.Color;
+            if (this._mainControlVM.ColourDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                SolidColorBrush b = new SolidColorBrush(Color.FromArgb(this._mainControlVM.ColourDialog.Color.A,
+                                                                                  this._mainControlVM.ColourDialog.Color.R,
+                                                                                  this._mainControlVM.ColourDialog.Color.G,
+                                                                                  this._mainControlVM.ColourDialog.Color.B));
 
                 ((Canvas) sender).Background = b;
                 this._canvasVector.VectorBrush = b;
