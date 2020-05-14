@@ -71,11 +71,29 @@ namespace LinearTransformation.Model {
         }
         public static System.Windows.Media.Brush GetRandomBrush() {
             PropertyInfo[] properties = (typeof(System.Windows.Media.Brushes)).GetProperties();
-            return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null,null);
+            return (System.Windows.Media.Brush) properties[Utility.Random.Next(properties.Length)].GetValue(null, null);
         }
 
         internal static void ShowError(Exception e) {
             MessageBox.Show(e.Message, "Storch", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+
+        public static void SetCustomColours(System.Windows.Forms.ColorDialog colorDialog) {
+
+            for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
+                colorDialog.CustomColors[i] = ((int) Properties.Settings.Default[$"CustomColour{i + 1}"]);
+            }
+        }
+
+        public static void SaveCustomColours(System.Windows.Forms.ColorDialog colorDialog) {
+            for (int i = 0; i < colorDialog.CustomColors.Length; i++) {
+                Properties.Settings.Default[$"CustomColour{i + 1}"] = colorDialog.CustomColors[i];
+            }
+            int a = (int) Properties.Settings.Default[$"CustomColour1"];
+            Properties.Settings.Default.Save();
+            Properties.Settings.Default.Reload();
+        }
+
     }
 }

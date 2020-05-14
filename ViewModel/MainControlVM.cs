@@ -43,6 +43,8 @@ namespace LinearTransformation.ViewModel {
             CoordinateSystemData data = new CoordinateSystemData(-3, 3, -3, 3, 1, .5);
             this._coordinateSystemControl = new CoordinateSystem(this, data);
             this.UpdateWindowSettings(data);
+
+            Utility.SetCustomColours(this.ColourDialog);
         }
 
         public void Button_Click_AddVector(object sender, RoutedEventArgs e) {
@@ -155,6 +157,7 @@ namespace LinearTransformation.ViewModel {
                                                                                   this.ColourDialog.Color.R,
                                                                                   this.ColourDialog.Color.G,
                                                                                   this.ColourDialog.Color.B));
+                Utility.SaveCustomColours(this.ColourDialog);
             }
         }
 
