@@ -210,37 +210,30 @@ namespace LinearTransformation.Model {
             double h = canvasSize.Height;
             double step = 100;
 
-            #region third attempt
-            // TODO:
-
-            minX = minX * basisVectors.Item1.X +
-                   minY * basisVectors.Item2.X;
-
-            minY = minY * basisVectors.Item2.Y +
-                   minX * basisVectors.Item1.Y;
-
-            maxX = maxX * basisVectors.Item1.X +
-                   maxY * basisVectors.Item2.X;
-
-            maxY = maxY * basisVectors.Item2.Y +
-                   maxX * basisVectors.Item1.Y;
-            #endregion
 
 
             #region Corner Approach
-            /*
+
+            Vector iHat = basisVectors.Item1;
+            Vector jHat = basisVectors.Item2;
+
             Vector[] corners = new Vector[4];
             // top left
-            corners[0] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(0, 0));
+            corners[0] = CoordinateConverter.FromStaticToDynamic(iHat, jHat, new Vector(minX, maxY));
 
             // top right
-            corners[1] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(w, 0));
+            corners[1] = CoordinateConverter.FromStaticToDynamic(iHat, jHat, new Vector(maxX, maxY));
 
             // bottom left
-            corners[2] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(0, h));
+            corners[2] = CoordinateConverter.FromStaticToDynamic(iHat, jHat, new Vector(minX, minY));
 
             // boottom right
-            corners[3] = CoordinateConverter.FromPointToCoordinate(canvasSize, data, new Vector(w, h));
+            corners[3] = CoordinateConverter.FromStaticToDynamic(iHat, jHat, new Vector(maxX, minY));
+
+            minX = corners[0].X;
+            maxX = corners[0].X;
+            minY = corners[0].Y;
+            maxY = corners[0].Y;
 
             foreach (Vector v in corners) {
                 if (v.X < minX)
@@ -252,7 +245,7 @@ namespace LinearTransformation.Model {
                 if (v.Y > maxY)
                     maxY = v.Y;
             }
-            */
+
             #endregion
 
             #region pixelapproach

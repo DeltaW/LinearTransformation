@@ -75,12 +75,10 @@ namespace LinearTransformation.ViewModel {
 
                 this.Update();
             }
-            Vector temp = CoordinateConverter.FromPointToCoordinate(canvasSize,
-                                                                        this._dynamicData,
-                                                                        m);
             Vector temp2 = CoordinateConverter.FromPointToCoordinate(canvasSize,
                                                                         this._dynamicData,
                                                                         new Vector(0,0)/*m*/);
+            Vector temp = CoordinateConverter.FromStaticToDynamic(this._dynamicData.IHat, this._dynamicData.JHat, toMousePosition);
             this._mainControlVM._mainControl.Label_DynamicCoordinate.Content = $"dynamic: ({temp.X} | {temp.Y})";
             this._mainControlVM._mainControl.Label_StaticCoordinate.Content = $"static:  ({toMousePosition.X} | {toMousePosition.Y})";
             this._mainControlVM._mainControl.Label_test.Content = $"dynamic (0|0): ({temp2.X} | {temp2.Y})";
@@ -285,7 +283,7 @@ namespace LinearTransformation.ViewModel {
                 //double iHatStepY = /*Math.Abs*/(iHat.Y - this._dynamicData.IHat.Y ) / duration / fps;
                 //double jHatStepX = /*Math.Abs*/(jHat.X - this._dynamicData.JHat.X ) / duration / fps;
                 //double jHatStepY = /*Math.Abs*/(jHat.Y - this._dynamicData.JHat.Y ) / duration / fps;
-                int max = 100/*duration / 1000 * fps*/;
+                int max = 1/*duration / 1000 * fps*/;
                 for (int i = 0; i <= max; i++) {
                     double by = ((double) i) / ((double) max);
                     this._dynamicData.IHat = Utility.Lerp(this._dynamicData.IHat, iHat, by);

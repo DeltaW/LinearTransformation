@@ -504,5 +504,15 @@ namespace LinearTransformation.Model {
 
             throw new Exception("invalid range");
         }
+
+        public static Vector FromStaticToDynamic(Vector iHat, Vector jHat, Vector coordinate) {
+            // TODO: ADD DIVISION BY 0 EXCEPTION HANDLING
+
+            return new Vector((coordinate.X * jHat.Y - coordinate.Y * jHat.X) /
+                              (iHat.X * jHat.Y - iHat.Y * jHat.X),
+                              -((coordinate.X * iHat.Y - coordinate.Y * iHat.X) /
+                                (iHat.X * jHat.Y - iHat.Y * jHat.X)));
+        }
+
     }
 }
