@@ -81,7 +81,7 @@ namespace LinearTransformation.ViewModel {
             Vector temp = CoordinateConverter.FromStaticToDynamic(this._dynamicData.IHat, this._dynamicData.JHat, toMousePosition);
             this._mainControlVM._mainControl.Label_DynamicCoordinate.Content = $"dynamic: ({temp.X} | {temp.Y})";
             this._mainControlVM._mainControl.Label_StaticCoordinate.Content = $"static:  ({toMousePosition.X} | {toMousePosition.Y})";
-            this._mainControlVM._mainControl.Label_test.Content = $"dynamic (0|0): ({temp2.X} | {temp2.Y})";
+            this._mainControlVM._mainControl.Label_test.Content = $"dynamic minX|minY: ({this._dynamicData.MinX} | {this._dynamicData.MinY})\ndynamic maxX|maxY: ({this._dynamicData.MaxX}|{this._dynamicData.MaxY})";
 
             this._mainControlVM._mainControl.Label_test2.Content = $"dynamic (ihat): ({this._dynamicData.IHat.X} | {this._dynamicData.IHat.Y})";
             this._mainControlVM._mainControl.Label_test3.Content = $"dynamic (jhat): ({this._dynamicData.JHat.X} | {this._dynamicData.JHat.Y})";

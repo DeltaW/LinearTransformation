@@ -230,10 +230,10 @@ namespace LinearTransformation.Model {
             // boottom right
             corners[3] = CoordinateConverter.FromStaticToDynamic(iHat, jHat, new Vector(maxX, minY));
 
-            minX = corners[0].X;
-            maxX = corners[0].X;
-            minY = corners[0].Y;
-            maxY = corners[0].Y;
+            minX = double.PositiveInfinity;
+            maxX = double.NegativeInfinity;
+            minY = double.PositiveInfinity;
+            maxY = double.NegativeInfinity;
 
             foreach (Vector v in corners) {
                 if (v.X < minX)
