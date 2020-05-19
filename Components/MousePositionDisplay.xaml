@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="LinearTransformation.Components.MousePositionDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LinearTransformation.Components"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        
+        <Style TargetType="Label">
+            <Setter Property="FontFamily"                   Value="Courier New"/>
+            <Setter Property="FontSize"                     Value="12"/>
+            <Setter Property="Foreground"                   Value="White"/>
+            <Setter Property="HorizontalContentAlignment"   Value="Right"/>
+        </Style>
+    
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Static |"/>
+            
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="x:"/>
+            <Label x:Name="Label_StaticX"/>
+            <Label Content="y:"/>
+            <Label x:Name="Label_StaticY"/>
+        </StackPanel>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Dynamic |"/>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="x:"/>
+            <Label x:Name="Label_DynamicX"/>
+            <Label Content="y:"/>
+            <Label x:Name="Label_DynamicY"/>
+        </StackPanel>
+       
+    </Grid>
+    
+</UserControl>
